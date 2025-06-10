@@ -16,4 +16,15 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+  document.querySelectorAll('.main-nav a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      const id = this.getAttribute('href').slice(1);
+      const section = document.getElementById(id);
+      if (section) {
+        section.classList.remove('collapsed');
+        const arrow = section.querySelector('.arrow');
+        if (arrow) arrow.textContent = '▼';
+      }
+    });
+  });
 });
