@@ -23,12 +23,12 @@ h1 {
       font-size: 2.5rem;
       font-weight: 700;
       letter-spacing: 1px;
-      color: #2d3a4a;
+      color: #3b4a6b;
       margin-bottom: 0.2rem;
 }
 .subtitle {
       font-size: 1.25rem;
-      color: #5a6a85;
+      color: #6c63ff;
       margin-bottom: 1.5rem;
       font-weight: 500;
 }
@@ -55,6 +55,8 @@ section {
       background: #f6f8fc;
       overflow: hidden;
       transition: box-shadow 0.2s;
+      opacity: 0;
+      pointer-events: none;
 }
 section.collapsed ul {
       display: none;
@@ -85,14 +87,28 @@ section.collapsed .arrow {
       transform: rotate(-120deg); /* 90 grados a la derecha */
 }
 .main-nav {
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(60, 72, 100, 0.07);
-      border-radius: 12px;
-      margin: 0 auto 2rem auto;
-      max-width: 850px;
-      padding: 0.5rem 1.5rem;
-      z-index: 2;
-      position: relative;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(60, 72, 100, 0.07);
+  border-radius: 12px;
+  margin: 0 auto 2rem auto;
+  max-width: 850px;
+  padding: 0.5rem 1.5rem;
+  z-index: 2;
+  position: relative;
+  border: 3px solid transparent;
+  --border-angle: 0deg;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    conic-gradient(from var(--border-angle), #6c63ff 0%, #a084ee 25%, #6c63ff 50%, #a084ee 75%, #6c63ff 100%) border-box;
+  animation: border-rotate 3s linear infinite;
+}
+@keyframes border-rotate {
+  0% {
+    --border-angle: 0deg;
+  }
+  100% {
+    --border-angle: 360deg;
+  }
 }
 .main-nav ul {
       display: flex;
@@ -119,6 +135,135 @@ section.collapsed .arrow {
       background: #e7eafe;
       color: #6c63ff;
 }
+.carousel-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.5rem 0 0 0;
+}
+.carousel-btn {
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(60, 72, 100, 0.13);
+  transition: background 0.2s, color 0.2s;
+}
+.carousel-btn:disabled {
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+}
+section.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.skill-name {
+  display: inline-block;
+  width: 170px;
+  font-weight: 600;
+  color: #3b4a6b;
+}
+.skill-bar {
+  display: inline-block;
+  vertical-align: middle;
+  width: 55%;
+  height: 18px;
+  background: #e7eafe;
+  border-radius: 8px;
+  margin-left: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.skill-level {
+  height: 100%;
+  background: linear-gradient(90deg, #6c63ff 60%, #a084ee 100%);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: right;
+  padding-right: 8px;
+  line-height: 18px;
+  transition: width 1s cubic-bezier(.4,2,.6,1);
+}
+.skills-list li {
+  margin-bottom: 0.7rem;
+}
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0 1rem 0;
+}
+#contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(60,72,100,0.10);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  min-width: 320px;
+  max-width: 400px;
+  width: 100%;
+  gap: 1.1rem;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.form-group label {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #3b4a6b;
+}
+#contact-form input, #contact-form textarea {
+  border: 1px solid #bfc4d1;
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+  background: #f6f8fc;
+  color: #222;
+  transition: border 0.2s;
+}
+#contact-form input:focus, #contact-form textarea:focus {
+  border: 1.5px solid #6c63ff;
+  outline: none;
+}
+#contact-form button[type="submit"] {
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+#contact-form button[type="submit"]:hover {
+  background: #4b44c2;
+}
+#form-status {
+  display: block;
+  margin-top: 0.7rem;
+  font-size: 1rem;
+}
 @media (max-width: 700px) {
       .container {
         padding: 1.2rem 0.5rem;
@@ -144,4 +289,66 @@ section.collapsed .arrow {
         padding: 0.3rem 0.5rem;
         font-size: 0.95rem;
       }
+      #contact-form {
+        padding: 1rem 0.5rem 1rem 0.5rem;
+        min-width: 0;
+        max-width: 98vw;
+      }
+}
+body.darkmode {
+  background: url('../img/6-Curiosidades-sobre-el-Desarrollo-de-Software-min.png') no-repeat center center fixed !important;
+  background-size: cover !important;
+  color: #f1f1f1 !important;
+}
+body.darkmode .container {
+  background: #23272b !important;
+  color: #f1f1f1 !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+body.darkmode .main-nav {
+  background:
+    linear-gradient(#23272b, #23272b) padding-box,
+    conic-gradient(from var(--border-angle), #6c63ff 0%, #a084ee 25%, #6c63ff 50%, #a084ee 75%, #6c63ff 100%) border-box !important;
+  animation: border-rotate 3s linear infinite;
+  border: 3px solid transparent;
+}
+body.darkmode .main-nav a {
+  color: #e7eafe !important;
+}
+body.darkmode .main-nav a:hover, body.darkmode .main-nav a:focus {
+  background: #353b48 !important;
+  color: #6c63ff !important;
+}
+body.darkmode .section-header {
+  background: #353b48 !important;
+  color: #e7eafe !important;
+}
+body.darkmode section {
+  background: #23272b !important;
+  color: #f1f1f1 !important;
+}
+body.darkmode .skill-bar {
+  background: #353b48 !important;
+}
+body.darkmode .skill-level {
+  background: linear-gradient(90deg, #a084ee 60%, #6c63ff 100%) !important;
+}
+body.darkmode .carousel-btn {
+  background: #353b48 !important;
+  color: #e7eafe !important;
+}
+body.darkmode .carousel-btn:disabled {
+  background: #222 !important;
+  color: #888 !important;
+}
+body.darkmode input, body.darkmode textarea {
+  background: #23272b !important;
+  color: #f1f1f1 !important;
+  border: 1px solid #444 !important;
+}
+body.darkmode label {
+  color: #e7eafe !important;
+}
+body.darkmode #contact-form {
+  background: #23272b !important;
 }

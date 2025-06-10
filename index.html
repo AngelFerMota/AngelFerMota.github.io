@@ -4,39 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CV - Ángel Fernández Mota</title>
+  <meta name="description" content="CV de Ángel Fernández Mota, desarrollador de software especializado en .NET, frontend y multiplataforma.">
+  <meta name="keywords" content="CV, Ángel Fernández Mota, desarrollador, software, .NET, frontend, backend, multiplataforma, programación">
+  <meta name="author" content="Ángel Fernández Mota">
+  <meta property="og:title" content="CV - Ángel Fernández Mota">
+  <meta property="og:description" content="Desarrollador de software especializado en .NET, frontend y multiplataforma.">
+  <meta property="og:image" content="img/6-Curiosidades-sobre-el-Desarrollo-de-Software-min.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://angelmota.dev">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CV - Ángel Fernández Mota">
+  <meta name="twitter:description" content="Desarrollador de software especializado en .NET, frontend y multiplataforma.">
+  <meta name="twitter:image" content="img/6-Curiosidades-sobre-el-Desarrollo-de-Software-min.png">
   <link rel="stylesheet" href="css/styles.css">
   <script defer src="js/main.js"></script>
 </head>
 <body>
+  <button id="toggle-darkmode" aria-label="Alternar modo oscuro" style="position:fixed;top:1rem;right:1rem;z-index:1000;">🌙</button>
   <div class="container">
     <header>
-      <h1>Ángel Fernández Mota</h1>
+      <h1 tabindex="0">Ángel Fernández Mota</h1>
       <div class="subtitle">Desarrollador de Software</div>
     </header>
-    <nav class="main-nav">
+    <nav class="main-nav" aria-label="Navegación principal">
       <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-        <li><a href="#experiencia">Experiencia Laboral</a></li>
-        <li><a href="#habilidades-tecnicas">Habilidades Técnicas</a></li>
-        <li><a href="#habilidades-blandas">Habilidades Blandas</a></li>
-        <li><a href="#educacion">Educación</a></li>
-        <li><a href="#idiomas">Idiomas</a></li>
-        <li><a href="#fortalezas">Fortalezas Personales</a></li>
-        <li><a href="#cursos">Cursos</a></li>
-        <li><a href="#descargas">Descargas</a></li>
+        <li><a href="#inicio" tabindex="0">Inicio</a></li>
+        <li><a href="#contacto" tabindex="0">Contacto</a></li>
+        <li><a href="#experiencia" tabindex="0">Experiencia Laboral</a></li>
+        <li><a href="#habilidades-tecnicas" tabindex="0">Habilidades Técnicas</a></li>
+        <li><a href="#habilidades-blandas" tabindex="0">Habilidades Blandas</a></li>
+        <li><a href="#educacion" tabindex="0">Educación</a></li>
+        <li><a href="#idiomas" tabindex="0">Idiomas</a></li>
+        <li><a href="#fortalezas" tabindex="0">Fortalezas Personales</a></li>
+        <li><a href="#cursos" tabindex="0">Cursos</a></li>
+        <li><a href="#descargas" tabindex="0">Descargas</a></li>
       </ul>
     </nav>
+    <div class="carousel-nav" aria-label="Navegación de secciones">
+      <button class="carousel-btn" id="prevSection" title="Anterior" aria-label="Sección anterior">&#8592;</button>
+      <button class="carousel-btn" id="nextSection" title="Siguiente" aria-label="Siguiente sección">&#8594;</button>
+    </div>
 
     <section id="inicio">
+      <div class="section-header"><span class="arrow">▼</span>Sobre mí</div>
+      <ul>
+        <li>Soy Ángel Fernández Mota, desarrollador de software apasionado por la tecnología y la resolución de problemas. Me especializo en backend con .NET, pero también tengo experiencia en frontend y multiplataforma. Me considero una persona analítica, organizada y con gran capacidad de aprendizaje. Disfruto trabajar en equipo y afrontar nuevos retos que me permitan crecer profesional y personalmente.</li>
+      </ul>
     </section>
 
     <section id="contacto">
       <div class="section-header"><span class="arrow">▼</span>Contacto</div>
       <ul>
-        <li>Teléfono: 659448062</li>
-        <li>Email: angelfernandezmota@gmail.com</li>
+        <li>Teléfono: <a href="tel:659448062" tabindex="0">659448062</a></li>
+        <li>Email: <a href="mailto:angelfernandezmota@gmail.com" tabindex="0">angelfernandezmota@gmail.com</a></li>
       </ul>
+      <div class="form-wrapper">
+        <h3 style="margin-bottom:1rem; text-align:center; color:#6c63ff;">Si eres reclutador, pongámonos en contacto</h3>
+        <form id="contact-form" aria-label="Formulario de contacto">
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required tabindex="0" aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required tabindex="0" aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" required tabindex="0" aria-required="true"></textarea>
+          </div>
+          <button type="submit" tabindex="0">Enviar</button>
+          <span id="form-status" role="status" style="margin-left:1rem;"></span>
+        </form>
+      </div>
     </section>
 
     <section id="experiencia">
@@ -50,12 +90,47 @@
 
     <section id="habilidades-tecnicas">
       <div class="section-header"><span class="arrow">▼</span>Habilidades Técnicas</div>
-      <ul>
-        <li>Lenguajes: C#, Swift, Dart, TypeScript, JavaScript</li>
-        <li>Frameworks: .NET Framework, .NET Core, ASP.NET, Angular19, Flutter, SwiftUI</li>
-        <li>Control de versiones: Git, Fork</li>
-        <li>Plataformas: Azure DevOps, AWS</li>
-        <li>Metodologías: Agile, Scrum, Waterfall</li>
+      <ul class="skills-list">
+        <li>
+          <span class="skill-name">C#</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 90%">90%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">.NET Framework/Core</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 85%">85%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">TypeScript</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 75%">75%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">JavaScript</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 70%">70%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">Swift</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 60%">60%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">Flutter/Dart</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 60%">60%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">Angular</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 65%">65%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">Git</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 80%">80%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">Azure DevOps</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 60%">60%</div></div>
+        </li>
+        <li>
+          <span class="skill-name">AWS</span>
+          <div class="skill-bar"><div class="skill-level" style="width: 50%">50%</div></div>
+        </li>
       </ul>
     </section>
 
