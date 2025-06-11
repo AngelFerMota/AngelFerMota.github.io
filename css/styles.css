@@ -264,6 +264,45 @@ section.active {
   margin-top: 0.7rem;
   font-size: 1rem;
 }
+#proyectos ul li a {
+  display: inline-block;
+  background: #e7eafe;
+  color: #3b4a6b;
+  border-radius: 8px;
+  padding: 0.4em 1.1em;
+  font-weight: 600;
+  font-size: 1.08em;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(60, 72, 100, 0.07);
+  margin-bottom: 0.3em;
+  margin-top: 0.3em;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+#proyectos ul li a:hover, #proyectos ul li a:focus {
+  background: #6c63ff;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.18);
+}
+/* Botón de enlace de proyecto reutilizable */
+.project-link {
+  display: inline-block;
+  background: #e7eafe;
+  color: #3b4a6b;
+  border-radius: 8px;
+  padding: 0.4em 1.1em;
+  font-weight: 600;
+  font-size: 1.08em;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(60, 72, 100, 0.07);
+  margin-bottom: 0.3em;
+  margin-top: 0.3em;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.project-link:hover, .project-link:focus {
+  background: #6c63ff;
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.18);
+}
 @media (max-width: 700px) {
       .container {
         padding: 1.2rem 0.5rem;
