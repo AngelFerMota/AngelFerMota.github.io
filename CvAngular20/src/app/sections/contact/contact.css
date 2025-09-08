@@ -1,0 +1,132 @@
+/* Los estilos globales de details se aplicarán automáticamente */
+
+/* Grid responsive para el layout de contacto */
+@media (max-width: 768px) {
+  details div[style*="grid"] {
+    display: block !important;
+  }
+  
+  details div[style*="grid"] > div:first-child {
+    margin-bottom: 30px;
+  }
+}
+
+h3 {
+  color: var(--primary);
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  font-size: 18px;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.form {
+  max-width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+}
+
+button {
+  align-self: center;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: var(--shadow-button);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  letter-spacing: 0.025em;
+}
+
+button:hover:not(:disabled), button:focus:not(:disabled) {
+  background: var(--gradient-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-button-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ok {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 12px;
+}
+
+.ok {
+  color: #10B981;
+  text-align: center;
+  margin-top: 16px;
+  font-weight: 500;
+}
+
+/* Estilos específicos para modo claro */
+body.light-mode input, 
+body.light-mode textarea {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(30, 41, 59, 0.2);
+  color: var(--text-primary);
+}
+
+body.light-mode input:focus, 
+body.light-mode textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* Estilos específicos para modo oscuro */
+body.dark-mode input, 
+body.dark-mode textarea {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(148, 163, 184, 0.3);
+  color: var(--text-primary);
+}
+
+body.dark-mode input:focus, 
+body.dark-mode textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
