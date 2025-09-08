@@ -1,0 +1,14 @@
+{
+  "routes": {
+    "/": {},
+    "/contact": {},
+    "/courses": {},
+    "/downloads": {},
+    "/education": {},
+    "/languages": {},
+    "/personal-strengths": {},
+    "/soft-skills": {},
+    "/technical-skills": {},
+    "/work-experience": {}
+  }
+}
