@@ -1,0 +1,27 @@
+<details open>
+  <summary><strong>Contacto</strong></summary>
+  
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+    <div>
+      <h3>Información de Contacto</h3>
+      <p><strong>Teléfono:</strong> <a href="tel:659448062">659 448 062</a></p>
+      <p><strong>Email:</strong> <a href="mailto:angelfernandezmota@gmail.com">angelfernandezmota@gmail.com</a></p>
+      <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/angel-fernandez-mota" target="_blank">linkedin.com/in/angel-fernandez-mota</a></p>
+      <p><strong>GitHub:</strong> <a href="https://github.com/AngelFerMota" target="_blank">github.com/AngelFerMota</a></p>
+      <p><strong>Ubicación:</strong> Murcia, España</p>
+    </div>
+    
+    <div>
+      <h3>Envíame un mensaje</h3>
+      <form class="form" [formGroup]="form" (ngSubmit)="submit()">
+        <input type="text" formControlName="name" placeholder="Tu nombre" required>
+        <input type="email" formControlName="email" placeholder="Tu email" required>
+        <textarea formControlName="message" placeholder="Tu mensaje" rows="5" required></textarea>
+        <button type="submit" [disabled]="form.invalid">Enviar Mensaje</button>
+        @if (sent) {
+          <div class="ok">¡Mensaje enviado con éxito!</div>
+        }
+      </form>
+    </div>
+  </div>
+</details>

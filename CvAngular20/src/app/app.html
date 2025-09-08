@@ -1,0 +1,19 @@
+<div class="bg">
+  <div class="card">
+    <!-- Botón de toggle para alternar modo día/noche -->
+    <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="isDarkMode() ? 'Cambiar a modo día' : 'Cambiar a modo noche'">
+      @if (isDarkMode()) {
+        <span class="sun-icon">☀️</span>
+      } @else {
+        <span class="moon-icon">🌙</span>
+      }
+    </button>
+
+    <h1>Ángel Fernández Mota</h1>
+    <p class="subtitle">Software Developer</p>
+
+    <app-navbar/>
+
+    <router-outlet/>
+  </div>
+</div>
