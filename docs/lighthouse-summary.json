@@ -1,14 +1,15 @@
 {
+  "date": "2026-10-02T10:44:55.295Z",
   "url": "http://127.0.0.1:4300/",
-  "measuredAt": "2026-10-02T10:01:17.851Z",
-  "lighthouseVersion": "13.5.0",
-  "mode": "Production build, local HTTP server, mobile throttling",
   "scores": {
-    "performance": 96.0,
+    "performance": 90.0,
+    "best-practices": 100,
     "accessibility": 100,
-    "bestPractices": 100,
-    "seo": 100
+    "seo": 100,
+    "agentic-browsing": 100
   },
-  "layoutShift": 0,
-  "caveat": "Local measurement, not deployed-site guarantee."
+  "CLS": 0,
+  "FCP": "2.3 s",
+  "LCP": "3.3 s",
+  "TBT": "20 ms"
 }

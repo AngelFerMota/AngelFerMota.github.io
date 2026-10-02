@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build && node scripts/legacy-routes.mjs",
     "test": "playwright test",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "sync:github": "node scripts/sync-github.mjs"
   },
   "dependencies": {
     "@angular/common": "~20.3.0",

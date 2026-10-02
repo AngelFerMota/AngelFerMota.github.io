@@ -1,4 +1,15 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, writeFile, readFile } from "node:fs/promises";
+if (process.env.GITHUB_SHA) {
+  const path = "dist/portfolio/browser/index.html";
+  const html = await readFile(path, "utf8");
+  await writeFile(
+    path,
+    html.replace(
+      "</head>",
+      `<meta name="portfolio-revision" content="${process.env.GITHUB_SHA}"></head>`,
+    ),
+  );
+}
 const routes = {
   contact: "contact",
   "work-experience": "experience",
