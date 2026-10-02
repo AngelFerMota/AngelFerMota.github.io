@@ -206,34 +206,41 @@ test("original avatar loads and decorative background can be paused", async ({
   await expect(
     page.getByRole("button", { name: "Activar fondo animado" }),
   ).toBeVisible();
-  expect(
-    await page
-      .locator(".ambient-background")
-      .evaluate((element) =>
-        element
-          .getAnimations({ subtree: true })
-          .every((animation) => animation.playState === "paused"),
-      ),
-  ).toBe(true);
-  expect(
-    await page
-      .locator(".contact-panel")
-      .evaluate((element) =>
-        element
-          .getAnimations({ subtree: true })
-          .every((animation) => animation.playState === "paused"),
-      ),
-  ).toBe(true);
+  // The browser applies animation state changes on its next rendering frame.
+  await expect
+    .poll(() =>
+      page
+        .locator(".ambient-background")
+        .evaluate((element) =>
+          element
+            .getAnimations({ subtree: true })
+            .every((animation) => animation.playState === "paused"),
+        ),
+    )
+    .toBe(true);
+  await expect
+    .poll(() =>
+      page
+        .locator(".contact-panel")
+        .evaluate((element) =>
+          element
+            .getAnimations({ subtree: true })
+            .every((animation) => animation.playState === "paused"),
+        ),
+    )
+    .toBe(true);
   await page.getByRole("button", { name: "Activar fondo animado" }).click();
-  expect(
-    await page
-      .locator(".ambient-background")
-      .evaluate((element) =>
-        element
-          .getAnimations({ subtree: true })
-          .every((animation) => animation.playState === "running"),
-      ),
-  ).toBe(true);
+  await expect
+    .poll(() =>
+      page
+        .locator(".ambient-background")
+        .evaluate((element) =>
+          element
+            .getAnimations({ subtree: true })
+            .every((animation) => animation.playState === "running"),
+        ),
+    )
+    .toBe(true);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(
     page.getByRole("button", { name: "Pausar fondo animado" }),
