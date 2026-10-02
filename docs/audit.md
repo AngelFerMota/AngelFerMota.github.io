@@ -24,7 +24,7 @@ Python/FastAPI/React/Docker and cloud technologies are included from the owner's
 
 Angular 20.3, standalone OnPush component, signals for navigation, zoneless rendering and static prerendering. System fonts, no animation/icon library, tiny SVG favicon, CSS diagrams and one social preview image. Semantic sections, keyboard focus, skip link, reduced motion and persistent system-aware themes. Legacy routes redirect to sections. GitHub Actions validates PRs and deploys main only after merge.
 
-The original published deployment remains on main until review and merge. Historical generated assets remain recoverable in Git history.
+The original deployment was preserved until the first PR was reviewed and merged. This full-stack refinement is delivered through a separate review PR. Historical generated assets remain recoverable in Git history.
 
 ## Full-stack refinement
 
