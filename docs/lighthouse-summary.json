@@ -1,0 +1,13 @@
+{
+  "url": "http://127.0.0.1:4300/",
+  "measuredAt": "2026-10-02T09:29:40.481Z",
+  "lighthouseVersion": "13.5.0",
+  "mode": "Production build, local HTTP server, mobile throttling",
+  "scores": {
+    "performance": 95.0,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100
+  },
+  "caveat": "Local measurement, not deployed-site guarantee. Visible brand accessible name corrected after this run."
+}
