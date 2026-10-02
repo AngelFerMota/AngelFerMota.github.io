@@ -56,4 +56,69 @@ test("section links resolve and keyboard menu works", async ({ page }) => {
     .focus();
   await page.keyboard.press("Escape");
   await expect(menu).toHaveAttribute("aria-expanded", "false");
+  await expect(menu).toBeFocused();
+});
+test("project cases expose evidence with keyboard and highlight navigation", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const featured = page.locator("#reddit");
+  const summary = featured.locator("summary");
+  await summary.focus();
+  await page.keyboard.press("Enter");
+  await expect(
+    featured.getByText("Una decisión técnica", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    featured.getByRole("link", { name: "Pruebas del servicio" }),
+  ).toHaveAttribute("href", /digests\.service\.spec\.ts$/);
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+  await page.keyboard.press("Enter");
+  await expect(featured.locator("details")).not.toHaveAttribute("open", "");
+  await page
+    .getByRole("navigation")
+    .getByRole("link", { name: "Contacto" })
+    .click();
+  await expect(
+    page.getByRole("navigation").getByRole("link", { name: "Contacto" }),
+  ).toHaveAttribute("aria-current", "location");
+});
+test("reduced motion retains content and disables transitions", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/#projects");
+  await expect(
+    page.getByRole("heading", { name: "Ideas llevadas a código." }),
+  ).toBeVisible();
+  expect(
+    await page
+      .locator(".project")
+      .first()
+      .evaluate((element) => getComputedStyle(element).transitionDuration),
+  ).toBe("0s");
+  expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
+});
+test("prerendered project details remain usable without JavaScript", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("http://localhost:4200/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "Fernández Mota",
+  );
+  await page.locator("#todo summary").click();
+  await expect(
+    page.locator("#todo").getByText("Una decisión técnica", { exact: true }),
+  ).toBeVisible();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page
+    .getByRole("navigation")
+    .getByRole("link", { name: "Proyectos" })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Ideas llevadas a código." }),
+  ).toBeVisible();
+  await context.close();
 });
