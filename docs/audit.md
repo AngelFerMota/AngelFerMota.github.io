@@ -25,3 +25,11 @@ Python/FastAPI/React/Docker and cloud technologies are included from the owner's
 Angular 20.3, standalone OnPush component, signals for navigation, zoneless rendering and static prerendering. System fonts, no animation/icon library, tiny SVG favicon, CSS diagrams and one social preview image. Semantic sections, keyboard focus, skip link, reduced motion and persistent system-aware themes. Legacy routes redirect to sections. GitHub Actions validates PRs and deploys main only after merge.
 
 The original published deployment remains on main until review and merge. Historical generated assets remain recoverable in Git history.
+
+## Full-stack refinement
+
+The owner approved a name/role-led hero, project hierarchy, technical evidence and subtle motion. Reddit-Brief is featured with its modular API, replaceable summary provider and service tests. ToDoTareas now explicitly identifies the MySQL provider confirmed in `TareasApi.csproj`; its typed endpoints and no-tracking reads link directly to source. Cestaria illustrates shopping, nutrition and local storage. Native details expose problem, work and a technical decision; project evidence is separated from any unverified production/demo claim.
+
+The published Hybo recommendation was extracted and visually reviewed. It identifies the placement as an internship, so the role qualifier was corrected from the inherited “Junior Consultant” to “Prácticas”. A brief attributed excerpt appears with the original PDF link. The PDF itself remains unchanged.
+
+LinkedIn's full profile was behind an authentication wall. Indexed references to other employers are not sufficient to establish current job dates or duties, so no newer employment was invented. Navigation highlights visible sections and project links connect the stack to evidence. Reveals animate position only, preserving contrast, and respect reduced motion. Mobile navigation and project details also work without JavaScript.
