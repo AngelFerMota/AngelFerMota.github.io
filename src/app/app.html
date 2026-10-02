@@ -5,6 +5,7 @@
   [class.paused]="backgroundPaused()"
 >
   <div class="ambient-orbit"></div>
+  <div class="ambient-orbit ambient-orbit-secondary"></div>
   <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" fill="none">
     <g class="ambient-lines" stroke="currentColor" stroke-width="1">
       <path
@@ -15,7 +16,21 @@
       <circle cx="1250" cy="570" r="5" />
       <circle cx="280" cy="620" r="5" />
     </g>
+    <g class="ambient-streams" stroke="currentColor" stroke-width="2">
+      <path d="M0 220h100l70 70v160l100 100v170" />
+      <path d="M1440 90h-150l-90 90v230l-80 80v200" />
+      <path d="M1440 720h-120l-70-70v-80" />
+      <path d="M0 800h180l100-100v-80" />
+    </g>
   </svg>
+  <div class="skill-constellation">
+    <span class="skill-token skill-react">React</span>
+    <span class="skill-token skill-dotnet">.NET</span>
+    <span class="skill-token skill-flutter">Flutter</span>
+    <span class="skill-token skill-angular">Angular</span>
+    <span class="skill-token skill-python">Python</span>
+    <span class="skill-token skill-sql">SQL</span>
+  </div>
 </div>
 <header class="header">
   <div class="nav-wrap">
@@ -651,32 +666,75 @@
     class="container contact"
     aria-labelledby="contact-title"
   >
-    <p class="eyebrow">07 / CONTACTO</p>
-    <h2 id="contact-title">
-      Hablemos de<br />lo que viene<span class="accent">.</span>
-    </h2>
-    <div class="contact-bottom">
-      <p>Para oportunidades de desarrollo<br />o colaboración en proyectos.</p>
-      <div class="contact-links">
-        <a class="button primary" [href]="linkedin">Conectar en LinkedIn ↗</a
-        ><a class="button" href="https://github.com/AngelFerMota">GitHub ↗</a
-        ><a class="text-link" href="/files/cv-angel-fernandez-mota.pdf" download
-          >CV original (PDF · 2025) ↓</a
-        ><a class="text-link" href="/files/recommendation.pdf"
-          >Carta de recomendación ↗</a
+    <div class="contact-panel" [class.motion-paused]="backgroundPaused()">
+      <div class="contact-intro">
+        <p class="eyebrow">07 / CONTACTO</p>
+        <h2 id="contact-title">
+          Hablemos de<br />lo que viene<span class="accent">.</span>
+        </h2>
+        <p class="contact-copy">
+          ¿Un proyecto, una oportunidad o una conversación técnica? Cuéntame qué
+          tienes en mente.
+        </p>
+        <div
+          class="contact-flow"
+          aria-label="Desarrollo full stack: interfaces, APIs y datos"
         >
+          <div><span>INTERFACES</span><strong>React · Angular</strong></div>
+          <span class="flow-connector" aria-hidden="true"></span>
+          <div><span>APIs</span><strong>.NET · FastAPI</strong></div>
+          <span class="flow-connector" aria-hidden="true"></span>
+          <div><span>DATOS</span><strong>SQL</strong></div>
+        </div>
+      </div>
+      <div class="contact-actions">
+        <div class="email-contact">
+          <span class="contact-label">POR EMAIL</span>
+          <a class="contact-email" [href]="'mailto:' + email">{{email}}</a>
+          <div class="email-actions">
+            <a class="button primary" [href]="'mailto:' + email"
+              >Escríbeme <span aria-hidden="true">↗</span></a
+            >
+            <button class="button" type="button" (click)="copyEmail()">
+              Copiar email
+            </button>
+          </div>
+          <p role="status">{{copyStatus()}}</p>
+        </div>
+        <div class="contact-socials">
+          <a class="contact-social" [href]="linkedin">
+            <span class="social-mark" aria-hidden="true">in</span>
+            <span
+              ><strong>LinkedIn</strong
+              ><small>Mi perfil profesional</small></span
+            >
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a class="contact-social" href="https://github.com/AngelFerMota">
+            <span class="social-mark" aria-hidden="true">&lt;/&gt;</span>
+            <span
+              ><strong>GitHub</strong><small>Proyectos y código</small></span
+            >
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
       </div>
     </div>
-    <div class="email-contact">
-      <a [href]="'mailto:' + email">{{email}}</a>
-      <button class="button" type="button" (click)="copyEmail()">
-        Copiar email
-      </button>
-      <p role="status">{{copyStatus()}}</p>
+    <div class="contact-resources">
+      <span class="contact-label">PARA CONOCER MI TRAYECTORIA</span>
+      <a href="/files/cv-angel-fernandez-mota.pdf" download
+        >CV original <span>PDF · 2025 ↓</span></a
+      >
+      <a href="/files/recommendation.pdf"
+        >Carta de recomendación <span>PDF ↗</span></a
+      >
     </div>
   </section>
 </main>
-<aside aria-label="Conexión profesional">
+<aside
+  aria-label="Conexión profesional"
+  [hidden]="activeSection() === 'contact'"
+>
   <a
     class="linkedin-floating"
     [href]="linkedin"
