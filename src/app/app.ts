@@ -26,7 +26,6 @@ export class App {
     "https://www.linkedin.com/in/%C3%A1ngel-fern%C3%A1ndez-mota/";
   constructor() {
     afterNextRender(() => {
-      this.document.documentElement.dataset["enhanced"] = "true";
       const sections = this.document.querySelectorAll<HTMLElement>(
         ".hero, main > section[id]",
       );
