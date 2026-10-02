@@ -1,15 +1,15 @@
 {
-  "date": "2026-10-02T10:44:55.295Z",
+  "date": "2026-10-02T11:14:48.609Z",
   "url": "http://127.0.0.1:4300/",
   "scores": {
-    "performance": 90.0,
-    "best-practices": 100,
+    "performance": 90,
     "accessibility": 100,
+    "best-practices": 100,
     "seo": 100,
     "agentic-browsing": 100
   },
   "CLS": 0,
   "FCP": "2.3 s",
-  "LCP": "3.3 s",
-  "TBT": "20 ms"
+  "LCP": "3.2 s",
+  "TBT": "70 ms"
 }

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 test("responsive layout and accessible navigation", async ({ page }) => {
-  for (const width of [360, 390, 768, 1024, 1440, 1920]) {
+  for (const width of [360, 390, 768, 894, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
@@ -155,9 +155,7 @@ test("email copy writes the published address and handles clipboard denial", asy
   await expect(page.locator(".email-contact [role=status]")).toHaveText(
     "Correo copiado ✓",
   );
-  const email = await page
-    .locator('.email-contact a[href^="mailto:"]')
-    .innerText();
+  const email = await page.locator(".email-contact .contact-email").innerText();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(email);
   await page.evaluate(() => {
     navigator.clipboard.writeText = async () => {
@@ -168,9 +166,10 @@ test("email copy writes the published address and handles clipboard denial", asy
   await expect(page.locator(".email-contact [role=status]")).toContainText(
     "No se pudo copiar",
   );
-  await expect(
-    page.locator('.email-contact a[href^="mailto:"]'),
-  ).toHaveAttribute("href", `mailto:${email}`);
+  await expect(page.locator(".email-contact .contact-email")).toHaveAttribute(
+    "href",
+    `mailto:${email}`,
+  );
 });
 test("original avatar loads and decorative background can be paused", async ({
   page,
@@ -185,22 +184,66 @@ test("original avatar loads and decorative background can be paused", async ({
       avatar.evaluate((image: HTMLImageElement) => image.naturalWidth),
     )
     .toBe(512);
+  const token = page.locator(".skill-react");
+  const initialPosition = await token.evaluate(
+    (element) => getComputedStyle(element).transform,
+  );
+  await expect
+    .poll(() =>
+      token.evaluate((element) => getComputedStyle(element).transform),
+    )
+    .not.toBe(initialPosition);
+  expect(
+    await page
+      .locator(".ambient-background")
+      .evaluate((element) => element.getAnimations({ subtree: true }).length),
+  ).toBeGreaterThan(0);
+  await page.goto("/#contact");
+  await expect(
+    page.getByRole("link", { name: "Escríbeme", exact: true }),
+  ).toHaveAttribute("href", "mailto:angelfernandezmota@gmail.com");
   await page.getByRole("button", { name: "Pausar fondo animado" }).click();
   await expect(
     page.getByRole("button", { name: "Activar fondo animado" }),
   ).toBeVisible();
-  expect(
-    await page
-      .locator(".ambient-background")
-      .evaluate((element) =>
-        element
-          .getAnimations({ subtree: true })
-          .every((animation) => animation.playState === "paused"),
-      ),
-  ).toBe(true);
+  // The browser applies animation state changes on its next rendering frame.
+  await expect
+    .poll(() =>
+      page
+        .locator(".ambient-background")
+        .evaluate((element) =>
+          element
+            .getAnimations({ subtree: true })
+            .every((animation) => animation.playState === "paused"),
+        ),
+    )
+    .toBe(true);
+  await expect
+    .poll(() =>
+      page
+        .locator(".contact-panel")
+        .evaluate((element) =>
+          element
+            .getAnimations({ subtree: true })
+            .every((animation) => animation.playState === "paused"),
+        ),
+    )
+    .toBe(true);
+  await page.getByRole("button", { name: "Activar fondo animado" }).click();
+  await expect
+    .poll(() =>
+      page
+        .locator(".ambient-background")
+        .evaluate((element) =>
+          element
+            .getAnimations({ subtree: true })
+            .every((animation) => animation.playState === "running"),
+        ),
+    )
+    .toBe(true);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(
-    page.getByRole("button", { name: "Activar fondo animado" }),
+    page.getByRole("button", { name: "Pausar fondo animado" }),
   ).toBeHidden();
   expect(
     await page

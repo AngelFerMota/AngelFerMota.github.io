@@ -128,7 +128,7 @@
     height: 100%;
     width: 100%;
     color: var(--accent);
-    opacity: 0.14;
+    opacity: 0.24;
   }
   .ambient-orbit {
     position: absolute;
@@ -137,11 +137,86 @@
     top: -250px;
     right: -320px;
     background: radial-gradient(circle, rgb(10 102 194 / 13%), transparent 65%);
-    animation: ambient-drift 28s ease-in-out infinite alternate;
+    animation: ambient-drift 12s ease-in-out infinite alternate;
+  }
+  .ambient-orbit-secondary {
+    top: auto;
+    right: auto;
+    bottom: -240px;
+    left: -320px;
+    animation-delay: -6s;
+    animation-direction: alternate-reverse;
   }
   .ambient-lines {
-    transform-origin: center;
-    animation: ambient-drift 36s ease-in-out infinite alternate-reverse;
+    opacity: 0.6;
+  }
+  .ambient-streams {
+    stroke-dasharray: 12 230;
+    animation: signal-flow 9s linear infinite;
+  }
+  .ambient-streams path:nth-child(even) {
+    stroke-dasharray: 12 320;
+  }
+  .skill-token {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    color: var(--accent);
+    opacity: 0.28;
+    font:
+      11px ui-monospace,
+      monospace;
+    animation: skill-float 7s ease-in-out infinite alternate;
+  }
+  .skill-token::before {
+    content: "·";
+    font-size: 16px;
+  }
+  .skill-react {
+    left: 2%;
+    top: 20%;
+  }
+  .skill-dotnet {
+    left: 4%;
+    top: 49%;
+    animation-delay: -4s;
+  }
+  .skill-flutter {
+    left: 1%;
+    top: 78%;
+    animation-delay: -2s;
+  }
+  .skill-angular {
+    right: 1%;
+    top: 29%;
+    animation-delay: -3s;
+  }
+  .skill-python {
+    right: 3%;
+    top: 57%;
+    animation-delay: -5s;
+  }
+  .skill-sql {
+    right: 1%;
+    top: 84%;
+    animation-delay: -1s;
+  }
+  @keyframes signal-flow {
+    to {
+      stroke-dashoffset: -968;
+    }
+  }
+  @keyframes skill-float {
+    from {
+      transform: translate3d(0, -10px, 0);
+    }
+    to {
+      transform: translate3d(10px, 14px, 0);
+    }
   }
   .ambient-background.paused *,
   .ambient-background.paused {
@@ -164,10 +239,24 @@
       transform: translate3d(0, 0, 0);
     }
     to {
-      transform: translate3d(-22px, 18px, 0);
+      transform: translate3d(-90px, 70px, 0);
+    }
+  }
+  @media (max-width: 1280px) {
+    .skill-token {
+      opacity: 0.13;
+      font-size: 10px;
     }
   }
   @media (max-width: 768px) {
+    .skill-token {
+      padding: 6px;
+      gap: 5px;
+    }
+    .skill-dotnet,
+    .skill-python {
+      display: none;
+    }
     .profile-image {
       width: 52px;
       height: 52px;
@@ -487,29 +576,6 @@
     white-space: nowrap;
     color: var(--accent);
   }
-  .email-contact {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 18px;
-    margin-top: 32px;
-    padding-top: 28px;
-    border-top: 1px solid var(--border);
-  }
-  .email-contact > a {
-    font-size: clamp(14px, 2vw, 21px);
-    padding-block: 10px;
-    overflow-wrap: anywhere;
-  }
-  .email-contact button {
-    background: var(--surface);
-  }
-  .email-contact p {
-    width: 100%;
-    font-size: 12px;
-    margin: 0;
-    min-height: 22px;
-  }
   .linkedin-floating {
     position: fixed;
     z-index: 9;
@@ -537,8 +603,13 @@
     background: #084f97;
   }
   :root:not([data-enhanced]) .project-controls,
+  :root:not([data-enhanced]) .theme.motion-toggle,
   :root:not([data-enhanced]) .email-contact button {
     display: none;
+  }
+  :root:not([data-enhanced]) .ambient-background *,
+  :root:not([data-enhanced]) .flow-connector::after {
+    animation: none;
   }
   @media (max-width: 1024px) {
     .certifications {
@@ -730,10 +801,6 @@
   .specialties {
     color: var(--text);
     font-size: 16px;
-  }
-  .specialties span {
-    color: var(--accent);
-    padding-inline: 9px;
   }
   .hero-copy {
     max-width: 490px;
@@ -1358,32 +1425,244 @@
     font-size: 12px !important;
   }
   .contact {
-    padding-block: 100px;
+    padding-block: 80px 64px;
+  }
+  .contact-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 64px);
+    padding: clamp(24px, 4vw, 48px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: 0 16px 64px rgb(0 0 0 / 5%);
+  }
+  .contact-intro .eyebrow {
+    margin-bottom: 24px;
   }
   .contact h2 {
-    font-size: clamp(48px, 6.8vw, 80px);
+    font-size: clamp(38px, 4.5vw, 62px);
     line-height: 1.08;
     letter-spacing: -0.06em;
   }
-  .contact-bottom {
+  .contact-copy {
+    max-width: 340px;
+    margin: 24px 0 36px;
+    font-size: 15px;
+  }
+  .contact-flow {
     display: flex;
-    justify-content: space-between;
-    gap: 40px;
     align-items: center;
-    margin-top: 40px;
+    gap: 10px;
   }
-  .contact-bottom p {
-    font-size: 14px;
-    margin: 0;
+  .contact-flow div {
+    flex-shrink: 0;
   }
-  .contact-links {
+  .contact-flow div > span,
+  .contact-label {
+    display: block;
+    color: var(--muted);
+    font:
+      9px ui-monospace,
+      monospace;
+    letter-spacing: 0.1em;
+  }
+  .contact-flow strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 6px;
+  }
+  .flow-connector {
+    flex: 1;
+    min-width: 12px;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-connector::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    animation: contact-signal 2.8s ease-in-out infinite;
+  }
+  .flow-connector:nth-of-type(2)::after {
+    animation-delay: 1.4s;
+  }
+  @keyframes contact-signal {
+    from {
+      transform: translateX(-105%);
+    }
+    to {
+      transform: translateX(105%);
+    }
+  }
+  .motion-paused .flow-connector::after {
+    animation-play-state: paused;
+  }
+  .contact-actions {
+    min-width: 0;
+  }
+  .email-contact {
+    padding: 26px;
+    background: var(--alt);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .email-contact .contact-email {
+    display: block;
+    overflow-wrap: anywhere;
+    font-size: clamp(15px, 1.4vw, 20px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    padding-block: 14px 22px;
+    line-height: 1.5;
+  }
+  .email-actions {
     display: flex;
-    gap: 12px;
     flex-wrap: wrap;
-    max-width: 520px;
+    gap: 10px;
   }
-  .contact-links .text-link {
-    margin-right: 12px;
+  .email-actions .button {
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+  .email-actions button {
+    background: var(--surface);
+  }
+  .email-contact p {
+    min-height: 22px;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 14px 0 0;
+  }
+  .contact-socials {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .contact-social {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition:
+      border-color 180ms,
+      background 180ms;
+  }
+  .contact-social:hover {
+    border-color: var(--accent);
+    background: var(--alt);
+  }
+  .social-mark {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 18px;
+  }
+  .contact-social strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .contact-social small {
+    display: block;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .contact-social > span:last-child {
+    margin-left: auto;
+    color: var(--accent);
+  }
+  .contact-resources {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px 32px;
+    padding: 24px 8px 0;
+  }
+  .contact-resources > span {
+    margin-right: auto;
+  }
+  .contact-resources a {
+    font-size: 12px;
+    padding-block: 10px;
+  }
+  .contact-resources a span {
+    color: var(--muted);
+    margin-left: 8px;
+  }
+  @media (max-width: 1024px) {
+    .contact-socials {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 768px) {
+    .contact-panel {
+      grid-template-columns: 1fr;
+    }
+    .contact-intro {
+      max-width: 560px;
+    }
+    .contact-copy {
+      max-width: 440px;
+      margin-bottom: 24px;
+    }
+    .contact-flow {
+      max-width: 380px;
+    }
+    .email-contact .contact-email {
+      font-size: 20px;
+    }
+  }
+  @media (max-width: 520px) {
+    .contact-panel {
+      padding: 24px 20px;
+      gap: 28px;
+      border-radius: 16px;
+    }
+    .contact h2 {
+      font-size: 40px;
+    }
+    .contact-copy {
+      font-size: 14px;
+    }
+    .contact-flow {
+      gap: 8px;
+    }
+    .contact-flow strong {
+      font-size: 10px;
+    }
+    .email-contact {
+      padding: 20px 16px;
+    }
+    .email-contact .contact-email {
+      font-size: 16px;
+    }
+    .contact-socials {
+      grid-template-columns: 1fr;
+    }
+    .contact-social {
+      padding: 14px 16px;
+    }
+    .contact-social small {
+      font-size: 11px;
+    }
+    .contact-resources {
+      gap: 4px;
+      padding-inline: 4px;
+    }
+    .contact-resources > span {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .contact-resources a {
+      width: 100%;
+    }
   }
   footer {
     border-top: 1px solid var(--border);
@@ -1563,11 +1842,6 @@
     .contact {
       padding-block: 64px;
     }
-    .contact-bottom {
-      flex-direction: column;
-      align-items: start;
-      gap: 25px;
-    }
     footer {
       flex-wrap: wrap;
     }
@@ -1590,9 +1864,6 @@
     .specialties {
       font-size: 13px;
     }
-    .specialties span {
-      padding-inline: 6px;
-    }
     .hero-actions .button {
       gap: 13px;
       padding-inline: 15px;
@@ -1600,16 +1871,6 @@
     .role-note {
       display: block;
       font-size: 14px;
-    }
-    .contact-links {
-      flex-direction: column;
-      align-items: start;
-    }
-    .contact-links .button {
-      width: 100%;
-    }
-    .contact h2 {
-      font-size: 48px;
     }
     footer p {
       flex-basis: 80%;
