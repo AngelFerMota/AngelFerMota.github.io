@@ -1,4 +1,5 @@
 export interface Project {
+  id: string;
   name: string;
   repo: string;
   category: string;
@@ -7,9 +8,13 @@ export interface Project {
   solution: string;
   tech: string[];
   flow: string[];
+  contribution: string;
+  decision: string;
+  evidence: { label: string; path: string }[];
 }
 export const projects: readonly Project[] = [
   {
+    id: "reddit",
     name: "Reddit-Brief",
     repo: "Reddit-Brief",
     category: "01 / FULL STACK",
@@ -20,8 +25,24 @@ export const projects: readonly Project[] = [
       "Ingesta, puntuación de relevancia y generación de resúmenes con un backend modular y una interfaz React.",
     tech: ["NestJS", "React", "TypeScript", "Prisma"],
     flow: ["Publicaciones", "Relevancia", "Resumen"],
+    contribution:
+      "Integración de una interfaz React con una API NestJS que organiza intereses, publicaciones y resúmenes persistidos con Prisma.",
+    decision:
+      "El generador depende de una interfaz de proveedor de resúmenes. La implementación se puede sustituir sin mezclarla con la selección y persistencia de publicaciones.",
+    evidence: [
+      {
+        label: "Servicio de resúmenes",
+        path: "apps/api/src/digests/digests.service.ts",
+      },
+      {
+        label: "Pruebas del servicio",
+        path: "apps/api/src/digests/digests.service.spec.ts",
+      },
+      { label: "Modelo de datos", path: "apps/api/prisma/schema.prisma" },
+    ],
   },
   {
+    id: "todo",
     name: "ToDoTareas",
     repo: "ToDoTareas-Angular-.NET",
     category: "02 / WEB APPLICATION",
@@ -29,11 +50,26 @@ export const projects: readonly Project[] = [
     problem:
       "Organizar tareas requiere mantener sus cambios y estados de forma consistente.",
     solution:
-      "Interfaz Angular conectada a una API REST .NET para crear, editar y organizar tareas con persistencia local.",
-    tech: ["Angular", "C#", ".NET", "Entity Framework"],
-    flow: ["Angular", "API REST", "Persistencia"],
+      "Interfaz Angular conectada a una API REST .NET para crear, editar y organizar tareas, con Entity Framework y un proveedor MySQL.",
+    tech: ["Angular", "C#", ".NET", "Entity Framework", "MySQL"],
+    flow: ["Angular", ".NET API", "MySQL"],
+    contribution:
+      "Conexión entre la gestión de tareas en Angular, los contratos de la API y un servicio de datos con estados y fechas de seguimiento.",
+    decision:
+      "Los endpoints delegan la lógica en un servicio y devuelven respuestas HTTP tipadas. Las consultas de lectura utilizan AsNoTracking para evitar seguimiento innecesario.",
+    evidence: [
+      {
+        label: "Endpoints y contratos HTTP",
+        path: "TareasApi/Endpoints/TareasEndpoints.cs",
+      },
+      {
+        label: "Servicio de datos",
+        path: "TareasApi/Services/TareasService.cs",
+      },
+    ],
   },
   {
+    id: "cestaria",
     name: "Cestaria",
     repo: "TuCompra.Kcal",
     category: "03 / MOBILE APPLICATION",
@@ -44,6 +80,31 @@ export const projects: readonly Project[] = [
       "Aplicación Flutter que integra búsqueda y escaneo de productos, datos nutricionales, historial local y exportación PDF/CSV.",
     tech: ["Flutter", "Dart", "Riverpod", "SQLite"],
     flow: ["Productos", "Nutrición", "Lista local"],
+    contribution:
+      "Un recorrido de compra que reúne búsqueda y escaneo, información nutricional, gestión del carrito e historial con exportación PDF y CSV.",
+    decision:
+      "SQLite conserva la lista y el historial en el dispositivo; la búsqueda externa se separa de la consulta de datos ya guardados. Riverpod organiza el estado de la aplicación.",
+    evidence: [{ label: "Funcionalidades y arquitectura", path: "README.md" }],
+  },
+];
+export const capabilities = [
+  {
+    name: "Interfaces + APIs",
+    description: "Angular y .NET conectados mediante contratos HTTP.",
+    project: "ToDoTareas",
+    target: "todo",
+  },
+  {
+    name: "Servicios + datos",
+    description: "NestJS, Prisma y pruebas del generador de resúmenes.",
+    project: "Reddit-Brief",
+    target: "reddit",
+  },
+  {
+    name: "Producto + móvil",
+    description: "Flutter, integración de APIs e historial en SQLite.",
+    project: "Cestaria",
+    target: "cestaria",
   },
 ];
 export const stack = [

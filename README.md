@@ -24,7 +24,9 @@ npm test
 npm run build
 ```
 
-Tests cover six viewport widths, mobile menu/keyboard behavior, theme persistence, axe accessibility in both themes, section targets and the PDF download. There is no separate lint configuration. Production output is `dist/portfolio/browser/`; the root is never the output directory. Prerendering supplies readable content before Angular hydrates. `scripts/legacy-routes.mjs` preserves old URLs through section redirects.
+Six browser tests cover six viewport widths, mobile menu/keyboard behavior, theme persistence, axe accessibility in both themes and an expanded case study, section targets, the PDF download, active navigation, reduced motion and mobile navigation without JavaScript. There is no separate lint configuration. Production output is `dist/portfolio/browser/`; the root is never the output directory. Prerendering supplies readable content before Angular hydrates. `scripts/legacy-routes.mjs` preserves old URLs through section redirects.
+
+Project cases include conceptual diagrams, native expandable architecture details and links to code evidence. Position-only reveals preserve text contrast. The full-stack hero and social metadata share the same professional title. New employment entries require verified dates and descriptions; public search snippets alone are not used as CV facts.
 
 ## Deployment
 

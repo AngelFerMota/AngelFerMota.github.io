@@ -103,6 +103,14 @@
   .skip:focus {
     top: 10px;
   }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 @layer layout {
   .container,
@@ -140,6 +148,14 @@
   }
   nav a {
     padding-block: 12px;
+    border-bottom: 1px solid transparent;
+    transition:
+      color 180ms,
+      border-color 180ms;
+  }
+  nav a[aria-current="location"] {
+    color: var(--text);
+    border-bottom-color: var(--accent);
   }
   .nav-actions {
     display: flex;
@@ -192,15 +208,10 @@
     font-size: 12px;
     color: var(--muted);
   }
-  .intro {
-    margin: 48px 0 18px;
-    font-size: 18px;
-    color: var(--text);
-  }
   h1 {
-    font-size: clamp(48px, 6.8vw, 88px);
+    font-size: clamp(48px, 5.7vw, 78px);
     font-weight: 550;
-    margin-bottom: 36px;
+    margin-bottom: 20px;
     letter-spacing: -0.065em;
     line-height: 1.06;
   }
@@ -209,6 +220,13 @@
     grid-template-columns: 1.25fr 1fr;
     gap: 100px;
     align-items: start;
+    margin-top: 64px;
+  }
+  .hero-role {
+    font-size: clamp(24px, 2.7vw, 36px);
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    margin-bottom: 22px;
   }
   .specialties {
     color: var(--text);
@@ -269,6 +287,7 @@
   .architecture {
     padding: 5px 0 0 25px;
     border-left: 1px solid var(--border);
+    margin-top: 15px;
   }
   .diagram-label,
   .diagram-footer {
@@ -287,28 +306,34 @@
     gap: 2px 8px;
     background: var(--surface);
     font-size: 14px;
+    margin-top: 14px;
+    transition:
+      border-color 180ms,
+      background 180ms,
+      transform 180ms;
   }
-  .layer:first-of-type {
-    margin-top: 18px;
+  .layer:hover,
+  .layer:focus-visible {
+    border-color: var(--accent);
+    background: var(--alt);
+    transform: translateX(3px);
   }
   .layer-index {
     color: var(--accent);
     font:
       11px Consolas,
       monospace;
-    grid-row: span 2;
+    grid-row: span 3;
     padding-top: 4px;
   }
-  .layer code {
-    font-size: 11px;
-    color: var(--muted);
+  .layer p {
+    font-size: 12px;
+    margin: 4px 0 8px;
+    line-height: 1.6;
   }
-  .connector {
-    height: 13px;
-    width: 1px;
-    background: var(--accent);
-    margin-left: 29px;
-    opacity: 0.5;
+  .layer-project {
+    color: var(--accent);
+    font-size: 11px;
   }
   .diagram-footer {
     display: block;
@@ -406,67 +431,245 @@
     margin-top: 20px;
     margin-bottom: 0;
   }
+  .recommendation {
+    margin: 35px 0 0;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: center;
+  }
+  .recommendation .eyebrow {
+    margin-bottom: 12px;
+  }
+  .recommendation blockquote {
+    margin: 0;
+    max-width: 650px;
+    font-size: 20px;
+    line-height: 1.6;
+    letter-spacing: -0.02em;
+  }
+  .recommendation figcaption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
   .projects {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 22px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    align-items: start;
   }
   .project {
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
     background: var(--surface);
+    scroll-margin-top: 110px;
+    min-width: 0;
+    transition: border-color 180ms;
+  }
+  .project:focus-within {
+    border-color: var(--accent);
+  }
+  .project.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
   }
   .project-visual {
-    height: 235px;
-    padding: 23px;
+    min-height: 280px;
+    padding: 26px;
     background: var(--alt);
     border-bottom: 1px solid var(--border);
     position: relative;
   }
+  .featured .project-visual {
+    border-bottom: 0;
+    border-right: 1px solid var(--border);
+    height: 100%;
+    min-height: 440px;
+  }
   .visual-top {
     display: flex;
     justify-content: space-between;
+    font:
+      10px Consolas,
+      monospace;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .system-diagram {
+    max-width: 360px;
+    margin: 28px auto 38px;
+  }
+  .system-node {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 5px;
+    padding: 16px 18px;
+  }
+  .system-node > span {
+    display: block;
+    color: var(--muted);
+    font:
+      9px/1.7 Consolas,
+      monospace;
+    letter-spacing: 1px;
+  }
+  .system-node strong {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .system-node p {
+    font-size: 11px;
+    margin: 8px 0 0;
+  }
+  .module-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+  .module-list span {
+    font:
+      10px/1.7 Consolas,
+      monospace;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border);
+  }
+  .diagram-connection {
+    text-align: center;
+    padding: 8px;
+    font:
+      10px/1.7 Consolas,
+      monospace;
+    color: var(--muted);
+  }
+  .data-node {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .data-node > span {
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+  .diagram-test {
+    color: var(--muted);
+    font:
+      10px/1.8 Consolas,
+      monospace;
+    text-align: center;
+    margin: 16px 0 0;
+  }
+  .api-diagram {
+    margin: 30px auto 35px;
+    max-width: 380px;
+  }
+  .api-method {
+    display: block;
+    font:
+      13px/1.7 Consolas,
+      monospace;
+    color: var(--accent);
+  }
+  .api-layers {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .api-layers > span {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 5px;
+    padding: 12px 8px;
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+  }
+  .api-layers b {
+    font-weight: 400;
+    color: var(--muted);
+  }
+  .api-diagram p {
+    font:
+      10px/1.7 Consolas,
+      monospace;
+    margin: 16px 0;
+  }
+  .api-contract {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    font:
+      10px/1.7 Consolas,
+      monospace;
+    color: var(--muted);
+  }
+  .shopping-diagram {
+    max-width: 330px;
+    margin: 22px auto 35px;
+    text-align: center;
+  }
+  .product-step {
+    display: block;
+    color: var(--text);
+    font-size: 14px;
+  }
+  .shopping-sources {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .shopping-sources span {
+    border-bottom: 1px solid var(--border);
+    padding: 5px;
+    color: var(--muted);
+    font:
+      10px/1.7 Consolas,
+      monospace;
+  }
+  .shopping-connector {
+    display: block;
+    color: var(--accent);
+    margin-block: 6px;
+  }
+  .shopping-diagram p {
+    font:
+      10px/1.7 Consolas,
+      monospace;
+    margin: 8px 0;
+  }
+  .export-formats {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .export-formats span {
+    border: 1px solid var(--border);
+    padding: 2px 14px;
+    font:
+      10px/1.7 Consolas,
+      monospace;
+    border-radius: 4px;
+    color: var(--accent);
+  }
+  .visual-caption {
+    position: absolute;
+    bottom: 16px;
     font:
       9px Consolas,
       monospace;
     letter-spacing: 1px;
     color: var(--muted);
   }
-  .flow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 22px;
-    gap: 1px;
-  }
-  .flow span {
-    padding: 5px 14px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    min-width: 145px;
-    text-align: center;
-    font:
-      11px/1.7 Consolas,
-      monospace;
-    background: var(--surface);
-  }
-  .flow b {
-    color: var(--accent);
-    font-size: 13px;
-    font-weight: 400;
-  }
-  .visual-caption {
-    position: absolute;
-    bottom: 16px;
-    font:
-      8px Consolas,
-      monospace;
-    letter-spacing: 1px;
-    color: var(--muted);
-  }
   .project-body {
-    padding: 26px;
+    padding: 30px;
   }
   .project h3 {
     margin-bottom: 12px;
@@ -480,15 +683,82 @@
     font-size: 18px;
   }
   .project-summary {
-    font-size: 15px;
-    min-height: 52px;
+    font-size: 20px;
     color: var(--text);
     line-height: 1.5;
   }
+  .featured .project-summary {
+    font-size: 26px;
+    letter-spacing: -0.03em;
+  }
+  .featured h3 {
+    font-size: 30px;
+  }
+  .project-solution {
+    font-size: 14px;
+    line-height: 1.8;
+  }
   dl {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.8;
     margin-block: 24px;
+  }
+  .project-details {
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  .project-details summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    min-height: 52px;
+    font-size: 13px;
+    list-style: none;
+    gap: 12px;
+  }
+  .project-details summary::-webkit-details-marker {
+    display: none;
+  }
+  .details-indicator {
+    font-size: 22px;
+    color: var(--accent);
+    transition: transform 180ms;
+  }
+  .project-details[open] .details-indicator {
+    transform: rotate(45deg);
+  }
+  .project-details[open] .case-content {
+    animation: detail-in 200ms ease-out;
+  }
+  .case-content dl {
+    margin-top: 0;
+  }
+  .evidence-label {
+    font:
+      10px/1.7 Consolas,
+      monospace;
+    letter-spacing: 1px;
+  }
+  .evidence-links {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+  }
+  .evidence-links a {
+    display: block;
+    padding-block: 10px;
+    min-height: 44px;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  @keyframes detail-in {
+    from {
+      transform: translateY(4px);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
   dt {
     color: var(--text);
@@ -503,9 +773,9 @@
     font-size: 12px;
     display: flex;
     justify-content: space-between;
-    padding-top: 24px;
-    margin-top: 24px;
-    border-top: 1px solid var(--border);
+    padding-block: 10px;
+    min-height: 44px;
+    margin-top: 8px;
   }
   .about {
     display: grid;
@@ -544,6 +814,27 @@
     color: var(--muted);
     font-size: 14px;
     padding-block: 5px;
+  }
+  .stack-evidence {
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 25px;
+    margin-top: 32px;
+    padding-top: 22px;
+  }
+  .stack-evidence > span {
+    font:
+      10px/1.7 Consolas,
+      monospace;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .stack-evidence a {
+    padding-block: 10px;
+    font-size: 12px;
+    min-height: 44px;
   }
   .education {
     padding-block: 50px;
@@ -634,11 +925,31 @@
     .education {
       grid-template-columns: 200px 1fr;
     }
-    .project-summary {
-      min-height: 75px;
-    }
   }
   @media (max-width: 768px) {
+    :root:not([data-enhanced]) .nav-wrap {
+      flex-wrap: wrap;
+      height: auto;
+      padding-block: 16px;
+    }
+    :root:not([data-enhanced]) nav {
+      position: static;
+      display: flex;
+      flex-wrap: wrap;
+      order: 3;
+      width: 100%;
+      border: 0;
+      padding: 0;
+      gap: 12px;
+    }
+    :root:not([data-enhanced]) .nav-actions {
+      display: none;
+    }
+    .recommendation {
+      flex-direction: column;
+      align-items: start;
+      gap: 12px;
+    }
     .container,
     .nav-wrap {
       width: calc(100% - 40px);
@@ -671,10 +982,6 @@
     .hero {
       padding-top: 40px;
     }
-    .intro {
-      margin-top: 36px;
-      font-size: 15px;
-    }
     .hero-top .eyebrow {
       font-size: 9px;
       letter-spacing: 1px;
@@ -688,6 +995,7 @@
     .hero-bottom {
       grid-template-columns: 1fr;
       gap: 35px;
+      margin-top: 40px;
     }
     .architecture {
       max-width: 500px;
@@ -724,17 +1032,16 @@
       grid-template-columns: 1fr;
     }
     .project {
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
+      display: block;
     }
-    .project-visual {
-      height: 100%;
-      min-height: 260px;
-      border-bottom: 0;
-      border-right: 1px solid var(--border);
+    .project.featured {
+      grid-template-columns: 1fr;
     }
-    .project-summary {
+    .featured .project-visual {
+      height: auto;
       min-height: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--border);
     }
     .project-body {
       padding: 25px;
@@ -770,12 +1077,8 @@
     }
   }
   @media (max-width: 520px) {
-    .project {
-      display: block;
-    }
     .project-visual {
-      height: 220px;
-      min-height: 0;
+      min-height: 280px;
       border-right: 0;
       border-bottom: 1px solid var(--border);
     }
@@ -805,9 +1108,6 @@
     }
     .contact h2 {
       font-size: 48px;
-    }
-    .intro {
-      font-size: 14px;
     }
     footer p {
       flex-basis: 80%;
