@@ -130,6 +130,10 @@
     color: var(--accent);
     opacity: 0.24;
   }
+  .ambient-background .ambient-mobile,
+  .mobile-skill-ribbon {
+    display: none;
+  }
   .ambient-orbit {
     position: absolute;
     width: min(900px, 85vw);
@@ -219,7 +223,8 @@
     }
   }
   .ambient-background.paused *,
-  .ambient-background.paused {
+  .ambient-background.paused,
+  .mobile-skill-ribbon.paused * {
     animation-play-state: paused;
   }
   .hero-intro {
@@ -249,13 +254,83 @@
     }
   }
   @media (max-width: 768px) {
-    .skill-token {
-      padding: 6px;
-      gap: 5px;
+    html {
+      scroll-padding-top: 140px;
     }
-    .skill-dotnet,
-    .skill-python {
+    .header nav {
+      z-index: 2;
+    }
+    .ambient-background .ambient-desktop,
+    .skill-constellation {
       display: none;
+    }
+    .ambient-background .ambient-mobile {
+      display: block;
+      opacity: 0.5;
+    }
+    .ambient-mobile path {
+      vector-effect: non-scaling-stroke;
+    }
+    .ambient-orbit {
+      width: 100vw;
+      height: 100vw;
+      top: 16%;
+      right: -46vw;
+      animation-name: mobile-ambient-drift;
+    }
+    .ambient-orbit-secondary {
+      top: auto;
+      right: auto;
+      left: -46vw;
+      bottom: 0;
+    }
+    .mobile-skill-ribbon {
+      display: block;
+      overflow: hidden;
+      height: 40px;
+      border-top: 1px solid var(--border);
+      pointer-events: none;
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 20px,
+        #000 calc(100% - 20px),
+        transparent
+      );
+    }
+    .mobile-skill-track {
+      display: flex;
+      width: max-content;
+      height: 100%;
+      animation: mobile-skills 20s linear infinite;
+    }
+    .mobile-skill-set {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding-right: 28px;
+      color: var(--muted);
+      font:
+        11px ui-monospace,
+        monospace;
+    }
+    .mobile-skill-set span {
+      white-space: nowrap;
+    }
+    .mobile-skill-set span::before {
+      content: "·";
+      margin-right: 10px;
+      color: var(--accent);
+    }
+    @keyframes mobile-skills {
+      to {
+        transform: translateX(-50%);
+      }
+    }
+    @keyframes mobile-ambient-drift {
+      to {
+        transform: translate3d(-24px, 22px, 0);
+      }
     }
     .profile-image {
       width: 52px;
@@ -608,6 +683,7 @@
     display: none;
   }
   :root:not([data-enhanced]) .ambient-background *,
+  :root:not([data-enhanced]) .mobile-skill-track,
   :root:not([data-enhanced]) .flow-connector::after {
     animation: none;
   }

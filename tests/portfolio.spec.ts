@@ -241,6 +241,49 @@ test("original avatar loads and decorative background can be paused", async ({
         ),
     )
     .toBe(true);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator(".mobile-skill-ribbon")).toBeVisible();
+  await expect(page.locator(".ambient-mobile")).toBeVisible();
+  const circuitBounds = await page
+    .locator(".ambient-mobile use")
+    .evaluateAll((elements) =>
+      elements.map((element) => {
+        const bounds = element.getBoundingClientRect();
+        return { left: bounds.left, right: bounds.right };
+      }),
+    );
+  expect(
+    circuitBounds.every((bounds) => bounds.left >= 0 && bounds.right <= 390),
+  ).toBe(true);
+  const track = page.locator(".mobile-skill-track");
+  const initialTrack = await track.evaluate(
+    (element) => getComputedStyle(element).transform,
+  );
+  await expect
+    .poll(() =>
+      track.evaluate((element) => getComputedStyle(element).transform),
+    )
+    .not.toBe(initialTrack);
+  await page.getByRole("button", { name: "Pausar fondo animado" }).click();
+  await expect
+    .poll(() =>
+      track.evaluate((element) =>
+        element
+          .getAnimations()
+          .every((animation) => animation.playState === "paused"),
+      ),
+    )
+    .toBe(true);
+  await page.getByRole("button", { name: "Activar fondo animado" }).click();
+  await expect
+    .poll(() =>
+      track.evaluate((element) =>
+        element
+          .getAnimations()
+          .every((animation) => animation.playState === "running"),
+      ),
+    )
+    .toBe(true);
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(
     page.getByRole("button", { name: "Pausar fondo animado" }),
@@ -249,5 +292,8 @@ test("original avatar loads and decorative background can be paused", async ({
     await page
       .locator(".ambient-background")
       .evaluate((element) => element.getAnimations({ subtree: true }).length),
+  ).toBe(0);
+  expect(
+    await track.evaluate((element) => element.getAnimations().length),
   ).toBe(0);
 });
