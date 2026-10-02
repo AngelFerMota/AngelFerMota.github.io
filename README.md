@@ -24,13 +24,17 @@ npm test
 npm run build
 ```
 
-Six browser tests cover six viewport widths, mobile menu/keyboard behavior, theme persistence, axe accessibility in both themes and an expanded case study, section targets, the PDF download, active navigation, reduced motion and mobile navigation without JavaScript. There is no separate lint configuration. Production output is `dist/portfolio/browser/`; the root is never the output directory. Prerendering supplies readable content before Angular hydrates. `scripts/legacy-routes.mjs` preserves old URLs through section redirects.
+Nine browser tests cover six viewport widths, mobile menu/keyboard behavior, theme persistence, axe accessibility in both themes and an expanded case study, section targets, the PDF download, active navigation, reduced motion, project filters, clipboard success/denial, the original avatar, pauseable background and mobile navigation without JavaScript. Production output is `dist/portfolio/browser/`; the root is never the output directory. Prerendering supplies readable content before Angular hydrates. `scripts/legacy-routes.mjs` preserves old URLs through section redirects.
 
 Project cases include conceptual diagrams, native expandable architecture details and links to code evidence. Position-only reveals preserve text contrast. The full-stack hero and social metadata share the same professional title. New employment entries require verified dates and descriptions; public search snippets alone are not used as CV facts.
 
+The October 2026 content review includes Grupo cerQuo, Cojali and verified education/certifications from the owner's LinkedIn profile. The two Hybo entries for the same period are consolidated. The downloadable PDF remains the original 2025 CV; current experience is represented on the website.
+
+`npm run sync:github` refreshes a build-time snapshot of public repository counts, main languages, stars and latest commit dates in `src/app/github-snapshot.ts`. The date is shown beside the metrics; these are not live counters. The workflow refreshes them before validation and build. Its optional `GITHUB_TOKEN` stays in the build environment and is never included in the site.
+
 ## Deployment
 
-`.github/workflows/pages.yml` runs npm ci, TypeScript checking, Chromium tests and production build on pull requests. Only pushes to main or manual runs on main deploy via the official Pages artifact/deployment actions. Select **GitHub Actions** as the Pages source in repository Settings → Pages before merging. No secrets or manual dist copying are needed. GitHub Pages availability and branch protection depend on repository settings.
+`.github/workflows/pages.yml` validates pull requests and deploys only main via the official Pages artifact/deployment actions. **GitHub Actions** is now the repository's Pages source. A legacy `main /` publishing source would render the README rather than this Angular application. The deploy job checks Pages configuration and verifies the published Git revision, prerendered content, JavaScript, CSS and CV after publication. No manual dist copying is needed.
 
 ## Structure
 
@@ -45,3 +49,5 @@ docs/                audit and validation evidence
 ```
 
 Spanish content with professional English role names. Themes follow system preference until manually chosen; storage failure is tolerated. Project illustrations are conceptual diagrams, not application screenshots. Downloaded CV and recommendation are retained from the previous published assets. The legacy repository audit is in `docs/audit.md`.
+
+The original illustrated profile is preserved as `public/profile.png`. A lossless WebP version with identical decoded pixels is served at low priority. The dynamic background uses SVG/CSS, can be paused from the header, and is static under reduced-motion preferences. No animation library or background raster is downloaded.

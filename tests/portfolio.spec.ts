@@ -122,3 +122,89 @@ test("prerendered project details remain usable without JavaScript", async ({
   ).toBeVisible();
   await context.close();
 });
+test("project filtering preserves keyboard exploration and anchor targets", async ({
+  page,
+}) => {
+  await page.goto("/#projects");
+  const filters = page.getByRole("group", {
+    name: "Filtrar proyectos por especialidad",
+  });
+  await filters.getByRole("button", { name: "Móvil", exact: true }).focus();
+  await page.keyboard.press("Enter");
+  await expect(filters.getByRole("button", { name: "Móvil" })).toHaveAttribute(
+    "aria-pressed",
+    "true",
+  );
+  await expect(page.locator(".project:visible")).toHaveCount(2);
+  await expect(page.locator("#todo")).toBeHidden();
+  await page.locator('.stack-evidence a[href="#todo"]').click();
+  await expect(page.locator("#todo")).toBeVisible();
+  await expect(page.locator("#todo")).toBeInViewport();
+  await expect(page.locator(".project:visible")).toHaveCount(4);
+  await filters.getByRole("button", { name: "Backend", exact: true }).click();
+  await expect(page.locator(".project:visible")).toHaveCount(2);
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
+});
+test("email copy writes the published address and handles clipboard denial", async ({
+  page,
+  context,
+}) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.goto("/#contact");
+  await page.getByRole("button", { name: "Copiar email", exact: true }).click();
+  await expect(page.locator(".email-contact [role=status]")).toHaveText(
+    "Correo copiado ✓",
+  );
+  const email = await page
+    .locator('.email-contact a[href^="mailto:"]')
+    .innerText();
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(email);
+  await page.evaluate(() => {
+    navigator.clipboard.writeText = async () => {
+      throw new Error("denied");
+    };
+  });
+  await page.getByRole("button", { name: "Copiar email", exact: true }).click();
+  await expect(page.locator(".email-contact [role=status]")).toContainText(
+    "No se pudo copiar",
+  );
+  await expect(
+    page.locator('.email-contact a[href^="mailto:"]'),
+  ).toHaveAttribute("href", `mailto:${email}`);
+});
+test("original avatar loads and decorative background can be paused", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  const avatar = page.getByRole("img", {
+    name: "Avatar ilustrado de Ángel Fernández Mota",
+  });
+  await expect
+    .poll(() =>
+      avatar.evaluate((image: HTMLImageElement) => image.naturalWidth),
+    )
+    .toBe(512);
+  await page.getByRole("button", { name: "Pausar fondo animado" }).click();
+  await expect(
+    page.getByRole("button", { name: "Activar fondo animado" }),
+  ).toBeVisible();
+  expect(
+    await page
+      .locator(".ambient-background")
+      .evaluate((element) =>
+        element
+          .getAnimations({ subtree: true })
+          .every((animation) => animation.playState === "paused"),
+      ),
+  ).toBe(true);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(
+    page.getByRole("button", { name: "Activar fondo animado" }),
+  ).toBeHidden();
+  expect(
+    await page
+      .locator(".ambient-background")
+      .evaluate((element) => element.getAnimations({ subtree: true }).length),
+  ).toBe(0);
+});

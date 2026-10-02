@@ -8,6 +8,8 @@ import {
 } from "@angular/core";
 import { DOCUMENT } from "@angular/common";
 import { capabilities, projects, stack } from "./content";
+import { certifications } from "./certifications";
+import { githubSnapshot } from "./github-snapshot";
 @Component({
   selector: "app-root",
   standalone: true,
@@ -18,7 +20,14 @@ export class App {
   readonly projects = projects;
   readonly stack = stack;
   readonly capabilities = capabilities;
+  readonly certifications = certifications;
+  readonly github = githubSnapshot;
+  readonly filters = ["Todos", "Web", "Móvil", "Backend"];
+  readonly projectFilter = signal("Todos");
+  readonly email = "angelfernandezmota@gmail.com";
+  readonly copyStatus = signal("");
   readonly menuOpen = signal(false);
+  readonly backgroundPaused = signal(false);
   readonly activeSection = signal("");
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
@@ -64,7 +73,7 @@ export class App {
       );
       this.document
         .querySelectorAll(
-          ".section-heading, .project, .experience, .about-lead",
+          ".hero-profile, .architecture, .section-heading, .project, .experience, .about-lead",
         )
         .forEach((element) => reveal.observe(element));
       const reduceMotion = () => {
@@ -78,6 +87,41 @@ export class App {
         motion.removeEventListener("change", reduceMotion);
         animations.forEach((animation) => animation.cancel());
       });
+    });
+  }
+  async copyEmail(): Promise<void> {
+    try {
+      await navigator.clipboard.writeText(this.email);
+      this.copyStatus.set("Correo copiado ✓");
+    } catch {
+      this.copyStatus.set(
+        "No se pudo copiar. Puedes seleccionar el correo o abrir tu aplicación de email.",
+      );
+    }
+  }
+  openProject(target: string, event: MouseEvent): void {
+    if (
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    )
+      return;
+    if (this.projectFilter() === "Todos") return;
+    event.preventDefault();
+    this.projectFilter.set("Todos");
+    // Wait for Angular to reveal all cards before resolving the anchor position.
+    requestAnimationFrame(() => {
+      const project = this.document.getElementById(target);
+      if (!project) return;
+      history.pushState(history.state, "", `#${target}`);
+      project.scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "instant"
+          : "smooth",
+      });
+      project.focus({ preventScroll: true });
     });
   }
   closeMenu(restoreFocus = false): void {
